@@ -1,61 +1,41 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Manager z integracją Google Calendar
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Opis
+Aplikacja webowa do zarządzania zadaniami (to-do list), umożliwiająca tworzenie, edytowanie, śledzenie i oznaczanie zadań z uwzględnieniem priorytetów oraz statusów. Zawiera integrację z Google Calendar (OAuth2), system przypomnień mailowych o nadchodzących terminach oraz historię zmian zadań.
+Projekt zrealizowany w ramach zadania rekrutacyjnego.
 
-## About Laravel
+## Wymagania
+- PHP 8.x
+- Laravel 11
+- Composer
+- MySQL/PostgreSQL/SQLite
+- Konto Google Cloud z włączonym API Google Calendar i OAuth 2.0 Client ID
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalacja
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Sklonuj repozytorium: git clone [URL_REPO]
+2. Zainstaluj zależności: composer install
+3. Skopiuj plik .env.example lub dodaj do swojego pliku .env zmienne odpowiadające za Gmail SMTP, OAuth i Google Calendar
+4. Wykonaj migracje: php artisan migrate
+5. Utworzenie projektu Google Cloud
+- Przejdź na https://console.cloud.google.com/
+- Utwórz nowy projekt
+- Wybierz "Interfejsy API i usługi" -> "Dane logowania" -> "Utwórz dane logowania" -> "Identyfikator klienta OAuth" -> "Typ aplikacji: Aplikacja internetowa" 
+-> "Autoryzowane źródła JavaScriptu: http://localhost:8000" -> "Autoryzowane identyfikatory URI przekierowania: http://localhost:8000/google/callback" i wklej go do .env "GOOGLE_REDIRECT_URI" -> "Zapisz"
+-> Znajdź w "Tajne klucze klienta" w widoku identyfikatora klienta -> Wybierz " + Add secret " -> Skopiuj utworzony Tajny klucz klienta i wklej do .env "GOOGLE_CLIENT_SECRET"
+-> Następnie wróc do ""Interfejsy API i usługi" -> "Dane logowania"" -> Skopiuj identyfikator klienta i wklej do .env "GOOGLE_CLIENT_ID"
+- Wybierz "Interfejsy API i usługi" -> "Ekran zgody OAuth" -> "Odbiorcy" -> "Użytkownicy testowi: + Add users" -> Wpisz swój gmail z którego będziesz korzystał przy OAuth lokalnie
+6. Włączenie Google Calendar API
+- Przejdź do "Interfejsy API i usługi" -> "Bibliotetka"
+- Wyszukaj "Google Calendar API"
+- Kliknij "Włącz"
+7. Włączenie dostępu do konta Gmail
+- Przejdź do https://myaccount.google.com/security
+- W sekcji "Weryfikacja dwuetapowa" → Włącz
+- Wyszukaj "hasła do aplikacji" -> Stwórz hasło -> Skopiuj i wklej do .env "MAIL_PASSWORD"
+8. Uruchomienie lokalne: php artisan serve
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Użycie
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Zarejestruj i zaloguj użytkownika testowego. ( email musi się zgadzać z emailem podanym w google cloud dla użytkownika testowego oauth )
+- Cały interfejs intuicyjnie naprowadzi do wszystkich wymaganych operacji.
