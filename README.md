@@ -10,6 +10,7 @@ Projekt zrealizowany w ramach zadania rekrutacyjnego.
 - Composer
 - MySQL/PostgreSQL/SQLite
 - Konto Google Cloud z włączonym API Google Calendar i OAuth 2.0 Client ID
+- Konto Gmail
 
 ## Instalacja
 
@@ -31,11 +32,11 @@ Projekt zrealizowany w ramach zadania rekrutacyjnego.
 - Kliknij "Włącz"
 7. Włączenie dostępu do konta Gmail
 - Przejdź do https://myaccount.google.com/security
-- W sekcji "Weryfikacja dwuetapowa" → Włącz
+- W sekcji "Weryfikacja dwuetapowa" -> Włącz
 - Wyszukaj "hasła do aplikacji" -> Stwórz hasło -> Skopiuj i wklej do .env "MAIL_PASSWORD"
 8. Uruchomienie lokalne: php artisan serve
 
 ## Użycie
 
-- Zarejestruj i zaloguj użytkownika testowego. ( email musi się zgadzać z emailem podanym w google cloud dla użytkownika testowego oauth )
+- Zarejestruj i zaloguj użytkownika testowego.
 - Cały interfejs intuicyjnie naprowadzi do wszystkich wymaganych operacji.
